@@ -3,11 +3,16 @@ package org.ncj.aspects.lock;
 import java.lang.annotation.Annotation;
 import java.util.concurrent.TimeUnit;
 
+import lombok.ToString;
+
 public final class LockParams implements Lock {
 
     private final Lock lock;
 
     public LockParams(Lock lock) {
+        if (lock == null) {
+            throw new NullPointerException();
+        }
         this.lock = lock;
     }
 

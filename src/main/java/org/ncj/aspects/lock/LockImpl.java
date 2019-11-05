@@ -4,29 +4,35 @@ import java.util.NoSuchElementException;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Lock;
 
+import lombok.extern.slf4j.Slf4j;
 import org.ncj.aspects.lock.errors.LockException;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 
 @Aspect
-public final class LockAspect {
+@Slf4j
+public final class LockImpl {
 
     @Around("execution(@org.ncj.aspects.lock.Lock * * (..)) && @annotation(annotation)")
-    public Object wrap(ProceedingJoinPoint point, org.ncj.aspects.lock.Lock annotation) throws Throwable {
+    public Object around(ProceedingJoinPoint point, org.ncj.aspects.lock.Lock annotation) throws Throwable {
         // Get lock parameters
+        String lockKey = annotation.value();
         LockParams lockParams = new LockParams(annotation);
+        log.trace("Locking '{}' with parameters: {}", lockKey, lockParams);
         // Lock
         Lock lock = getLock(lockParams);
         boolean locked = lock(lock, lockParams);
         if (!locked) {
-            throw new LockException("Failed to lock '" + lockParams.value() + "'");
+            throw new LockException("Failed to lock '" + lockKey + "' with parameters: " + lockParams);
         }
+        log.debug("Locked '{}' with parameters: {}", lockKey, lockParams);
         try {
             Object result = point.proceed();
             return result;
         } finally {
             // Unlock
+            log.trace("Unlocking '{}' with parameters: {}", lockKey, lockParams);
             lock.unlock();
         }
     }
