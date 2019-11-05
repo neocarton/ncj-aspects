@@ -6,10 +6,10 @@ import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-import org.ncj.aspects.lock.errors.LockException;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.ncj.aspects.lock.errors.LockException;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
