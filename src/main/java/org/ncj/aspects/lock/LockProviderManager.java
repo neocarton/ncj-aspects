@@ -3,8 +3,8 @@ package org.ncj.aspects.lock;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.ncj.aspects.lock.reentrant.ReentrantLockProvider;
 import org.apache.commons.lang3.StringUtils;
+import org.ncj.aspects.lock.reentrant.ReentrantLockProvider;
 
 class LockProviderManager {
 

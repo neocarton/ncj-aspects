@@ -4,15 +4,17 @@ import java.util.NoSuchElementException;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Lock;
 
-import lombok.extern.slf4j.Slf4j;
-import org.ncj.aspects.lock.errors.LockException;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
+import org.ncj.aspects.lock.errors.LockException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @Aspect
-@Slf4j
 public final class LockImpl {
+
+    private static final Logger log = LoggerFactory.getLogger(LockImpl.class);
 
     @Around("execution(@org.ncj.aspects.lock.Lock * * (..)) && @annotation(annotation)")
     public Object around(ProceedingJoinPoint point, org.ncj.aspects.lock.Lock annotation) throws Throwable {

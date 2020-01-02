@@ -3,8 +3,8 @@ package org.ncj.aspects.lock.test;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.ncj.aspects.lock.Lock;
 import org.apache.commons.lang3.RandomUtils;
+import org.ncj.aspects.lock.Lock;
 
 class TestOnMethod {
 

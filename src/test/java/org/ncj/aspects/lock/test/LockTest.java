@@ -91,8 +91,8 @@ public class LockTest {
             this.function = function;
         }
 
-        public Thread start() {
-            Thread thread = new Thread(() -> {
+        public void start() {
+            thread = new Thread(() -> {
                 try {
                     result = function.get();
                 } catch (Throwable exc) {
@@ -100,8 +100,6 @@ public class LockTest {
                 }
             });
             thread.start();
-            this.thread = thread;
-            return thread;
         }
 
         public void join() throws InterruptedException {
